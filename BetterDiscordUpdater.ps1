@@ -1,12 +1,12 @@
 # Define the current directory
 $currentDir = (Get-Location).Path
-Write-Output "Current Dir: $currentDir"
+
+# Define the path to save the installer
+$installerPath = "$currentDir\BetterDiscord-Windows.exe"
 
 # Define the URL for the latest BetterDiscord installer
 $downloadUrl = "https://github.com/BetterDiscord/Installer/releases/latest/download/BetterDiscord-Windows.exe"
 
-# Define the path to save the installer
-$installerPath = "$currentDir\BetterDiscord-Windows.exe"
 Write-Output "Installer Path: $installerPath"
 # Function to download the file using WebClient
 function Download-File {
@@ -47,7 +47,7 @@ try {
 # Start the AutoHotkey script which will run the installer and handle all the prompts
 try {
     Write-Output "Starting AutoHotkey script to automate BetterDiscord installation..."
-    Start-Process -FilePath "$currentDir\BetterDiscordAutoKey.ahk" -ArgumentList "$installerPath" -PassThru
+    $ahkProcess = Start-Process -FilePath "$currentDir\BetterDiscordAutoKey.ahk" -ArgumentList "`"$installerPath`"" -PassThru
     Write-Output "AutoHotkey script has started."
 } catch {
     Write-Output "Error starting AutoHotkey script: $_"
@@ -67,6 +67,8 @@ try {
     Remove-Item -Path "$installerPath" -Force
 } catch {
     Write-Output "Error monitoring BetterDiscord installer: $_"
+    Write-Output "Removing BetterDiscord Installer..."
+    Remove-Item -Path "$installerPath" -Force
     Start-Sleep -Seconds 5
     exit 1
 }
@@ -81,6 +83,8 @@ try {
     exit 0
 } catch {
     Write-Output "Error starting Discord: $_"
+    Write-Output "Removing BetterDiscord Installer..."
+    Remove-Item -Path "$installerPath" -Force
     Start-Sleep -Seconds 5
     exit 1
 }
