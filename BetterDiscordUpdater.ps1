@@ -25,9 +25,9 @@ function Test-Download {
         [string]$path
     )
     if (Test-Path -Path $path) {
-        Write-Output "Download was successful..."
+        Write-Output "Download Successful..."
     } else {
-        Write-Output "Download failed..."
+        Write-Output "Download Failed..."
         exit 1
     }
 }
@@ -35,20 +35,19 @@ function Test-Download {
 # Download the installer using WebClient
 try {
     Write-Output "Downloading BetterDiscord Installer..."
-    Download-File -url $downloadUrl -outputPath $installerPath
+    # Download-File -url $downloadUrl -outputPath $installerPath
     Test-Download -path $installerPath
     Start-Sleep -Seconds 1
 } catch {
-    Write-Output "Error downloading BetterDiscord Installer: $_"
+    Write-Output "Error Downloading BetterDiscord Installer: $_"
     Start-Sleep -Seconds 5
     exit 1
 }
 
 # Start the AutoHotkey script which will run the installer and handle all the prompts
 try {
-    Write-Output "Starting AutoHotkey script to automate BetterDiscord installation..."
-    $ahkProcess = Start-Process -FilePath "$currentDir\BetterDiscordAutoKey.ahk" -ArgumentList "`"$installerPath`"" -PassThru
-    Write-Output "AutoHotkey script has started."
+    Write-Output "Starting AutoHotkey Script to automate BetterDiscord installation..."
+    Start-Process -FilePath "$currentDir\BetterDiscordAutoKey.ahk" -ArgumentList "`"$installerPath`"" -PassThru
 } catch {
     Write-Output "Error starting AutoHotkey script: $_"
     exit 1
@@ -78,13 +77,13 @@ try {
     Write-Output "Starting Discord..."
     Start-Process -FilePath "$env:LOCALAPPDATA\Discord\Update.exe" -ArgumentList "--processStart Discord.exe" -Wait
     Write-Output "Discord started successfully..."
-    Write-Output "Update complete!"
+    Write-Output "Update complete! ＼(＾.＾)／"
     Start-Sleep -Seconds 10
     exit 0
 } catch {
     Write-Output "Error starting Discord: $_"
     Write-Output "Removing BetterDiscord Installer..."
-    Remove-Item -Path "$installerPath" -Force
+    # Remove-Item -Path "$installerPath" -Force
     Start-Sleep -Seconds 5
     exit 1
 }

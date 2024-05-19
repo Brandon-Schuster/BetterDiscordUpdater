@@ -30,6 +30,5 @@ WinActivate("BetterDiscord")
 WinWaitActive("BetterDiscord")
 Send "{Tab 8}{Enter}"
 
-
 ; If we reach this point, assume success
 ExitApp(0)
