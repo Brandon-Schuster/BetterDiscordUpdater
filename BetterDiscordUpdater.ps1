@@ -35,7 +35,7 @@ function Test-Download {
 # Download the installer using WebClient
 try {
     Write-Output "Downloading BetterDiscord Installer..."
-    # Download-File -url $downloadUrl -outputPath $installerPath
+    Download-File -url $downloadUrl -outputPath $installerPath
     Test-Download -path $installerPath
     Start-Sleep -Seconds 1
 } catch {
@@ -83,7 +83,7 @@ try {
 } catch {
     Write-Output "Error starting Discord: $_"
     Write-Output "Removing BetterDiscord Installer..."
-    # Remove-Item -Path "$installerPath" -Force
+    Remove-Item -Path "$installerPath" -Force
     Start-Sleep -Seconds 5
     exit 1
 }
