@@ -8,16 +8,13 @@ installerPath := A_Args[1]
 ; Trim any extra whitespace
 installerPath := Trim(installerPath)
 
-; Ensure the path is correctly quoted                               
-
-
 ; Run the BetterDiscord installer
 Run(installerPath)
 WinActivate("BetterDiscord")
 WinWaitActive("BetterDiscord")
 Sleep(3000)
     
-; Automate the installer prompts
+; Automate the installer prompts, adjust as needed
 Send "{Tab 3}{Enter}"
 Sleep 300
 Send "{Tab 4}{Enter}"
